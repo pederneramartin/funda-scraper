@@ -1,9 +1,11 @@
-require('dotenv').config();
-const { writeFileSync, readFileSync } = require('fs');
-const puppeteer = require('puppeteer');
-const jsdom = require('jsdom');
-const nodeFetch = require('node-fetch');
-const { getZipCode, getNeighbourhoodData, convertResidentsToPercentage} = require('./utils/utils');
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { writeFileSync, readFileSync } from 'fs';
+import puppeteer from 'puppeteer';
+import { JSDOM } from 'jsdom';
+import fetch from 'node-fetch';
+import { getZipCode, getNeighbourhoodData, convertResidentsToPercentage } from './utils/utils.js';
 
 const WIDTH = 1920;
 const HEIGHT = 1080;
@@ -16,8 +18,8 @@ const houses = [];
 const { CHAT_ID, BOT_API } = process.env;
 
 const urls = [
-    'https://www.funda.nl/en/koop/amsterdam/beschikbaar/0-300000/40+woonopp/2+slaapkamers/1-dag/',
-    'https://www.funda.nl/en/koop/haarlem/beschikbaar/0-300000/40+woonopp/2+slaapkamers/1-dag/',
+    'https://www.funda.nl/zoeken/koop?selected_area=[%22haarlem/wijk-transvaalwijk%22,%22haarlem/soendabuurt%22,%22haarlem/bomenbuurt-oost%22,%22haarlem/kleverpark-noord%22,%22haarlem/kleverpark-zuid%22,%22haarlem/kweektuinbuurt%22,%22haarlem/schoterveenpolder%22,%22haarlem/bomenbuurt-west%22,%22haarlem/molukkenbuurt%22,%22haarlem/wijk-zijlwegkwartier%22,%22haarlem/wijk-amsterdamsewijk%22]&price=%220-525000%22&object_type=[%22house%22]&availability=[%22available%22]&bedrooms=%222-%22&exterior_space_type=[%22garden%22]&sort=%22date_down%22',
+    'https://www.funda.nl/zoeken/koop?selected_area=[%22haarlem/burgwal%22]&price=%220-525000%22&object_type=[%22house%22]&availability=[%22available%22]&bedrooms=%222-%22&exterior_space_type=[%22garden%22]&sort=%22date_down%22',
 ];
 
 const runTask = async () => {
@@ -112,7 +114,7 @@ const runPuppeteer = async (url) => {
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
     const htmlString = await page.content();
-    const dom = new jsdom.JSDOM(htmlString);
+    const dom = new JSDOM(htmlString);
 
 
     console.log('parsing funda.nl data');
