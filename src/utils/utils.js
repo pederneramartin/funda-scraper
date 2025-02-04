@@ -1,5 +1,5 @@
 // Code mostly from https://github.com/nikitaindik/funda-neighbourhoods/blob/de9b65b255a4c03a9ddb581e1472f6970240d9f7/src/content/content.js#L17
-import { fetchNeighbourhoodMeta, fetchNeighbourhoodStats } from './api';
+import { fetchNeighbourhoodMeta, fetchNeighbourhoodStats } from './api.js';
 
 export const convertResidentsToPercentage = (residentsCount, categoryCount) => {
     const shareOfResidents = categoryCount / residentsCount;
